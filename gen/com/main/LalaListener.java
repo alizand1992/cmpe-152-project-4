@@ -37,4 +37,34 @@ public interface LalaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAddexpr(LalaParser.AddexprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LalaParser#print}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint(LalaParser.PrintContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LalaParser#print}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint(LalaParser.PrintContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LalaParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterValue(LalaParser.ValueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LalaParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitValue(LalaParser.ValueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LalaParser#string}.
+	 * @param ctx the parse tree
+	 */
+	void enterString(LalaParser.StringContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LalaParser#string}.
+	 * @param ctx the parse tree
+	 */
+	void exitString(LalaParser.StringContext ctx);
 }

@@ -1,30 +1,37 @@
 package com.main;
 
-import org.antlr.v4.runtime.BufferedTokenStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.ListTokenSource;
-
-import java.util.Scanner;
-
 public class Compiler {
-    public static void main(String[] args) {
-        try {
-            String path = "";
-            Scanner in = new Scanner(System.in);
-            System.out.println("Please enter a path to a test file: ");
-            path = in.nextLine();
+    public int stackCounter;
+    public String className;
 
-            LalaLexer mll = new LalaLexer(CharStreams.fromFileName(path));
-            ListTokenSource ltsl = new ListTokenSource(mll.getAllTokens());
-            BufferedTokenStream btsl = new BufferedTokenStream(ltsl);
-            LalaParser mp = new LalaParser(btsl);
 
-            System.out.println("-----===== PARSE USING LISTENER =====-----");
-            mp.addParseListener(new MyLalaListener());
-            mp.program();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Compiler() {
+        stackCounter = 0;
+        className = null;
     }
+
+    public void addStackCounter(int howMany) {
+        this.stackCounter += howMany;
+    }
+
+    public String generateAsm() {
+        String asm =
+            ".class public " + className + "\n" +
+            ".super java/lang/Object\n" +
+            ".method public static main([Ljava/lang/String;)V\n";
+
+        asm += ".limit stack " + stackCounter + "\n";
+
+        asm += "getstatic java/lang/System/out Ljava/io/PrintStream;\n";
+
+        asm += "ldc \"print value\"\n";
+
+        asm += "invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n";
+
+        asm += "return\n" +
+                ".end method";
+
+        return asm;
+    }
+
 }
