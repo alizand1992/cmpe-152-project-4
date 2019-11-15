@@ -4,7 +4,6 @@ public class Compiler {
     public int stackCounter;
     public String className;
 
-
     public Compiler() {
         stackCounter = 0;
         className = null;

@@ -23,7 +23,7 @@ public class Main {
             mp.program();
 
 
-            System.out.println("\n\n\n\\n-----===== jASMin =====-----");
+            System.out.println("\n\n\n\n-----===== jASMin =====-----");
             System.out.println(compiler.generateAsm());
 
         } catch (Exception e) {
