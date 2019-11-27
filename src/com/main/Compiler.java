@@ -1,5 +1,7 @@
 package com.main;
 
+import com.main.grammar.Print;
+
 public class Compiler {
     public int stackCounter;
     public String className;
@@ -30,11 +32,8 @@ public class Compiler {
         String asm = "";
         asm += ".limit stack " + 2 + "\n";
 
-        asm += "getstatic java/lang/System/out Ljava/io/PrintStream;\n";
+        Print pf = new Print(somethingToPrint);
 
-        asm += "ldc \"" + somethingToPrint + "\"\n";
-
-        asm += "invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n";
-        return asm;
+        return pf.generateAsm();
     }
 }
