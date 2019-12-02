@@ -20,6 +20,7 @@ public class Compiler {
     }
 
     public Compiler(String className) {
+        lastType = null;
         varCounter = 1;
         stackCounter = 0;
         localCounter = 0;
@@ -47,6 +48,8 @@ public class Compiler {
         if (localCounter != 0) {
             asm += "\t.limit locals " + localCounter + "\n";
         }
+
+        asm += "\n";
 
         for (Line line : lines) {
             asm += line.getAsm();

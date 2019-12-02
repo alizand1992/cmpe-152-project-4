@@ -53,11 +53,15 @@ public class MyLalaListener extends LalaBaseListener {
             if (compiler.lastType.equals("long")) {
                 se.setValue("lload_" + (compiler.varCounter - 1));
                 se.setType("int");
+                compiler.lastType = null;
             } else {
+                if (!se.getType().equals("float")) {
+                    compiler.lastType = "long";
+                }
+
                 se.setValue("dload_" + (compiler.varCounter - 1));
                 se.setType("float");
             }
-            compiler.lastType = null;
         } else {
             se.setValue(rhs);
         }
@@ -70,14 +74,25 @@ public class MyLalaListener extends LalaBaseListener {
 
         compiler.addStackCounter(2);
         compiler.localCounter += 2;
+
         String l = ctx.children.get(0).getText();
+        String r = ctx.children.get(2).getText();
 
         if (l.contains("+")) {
             l = "lload_" + (compiler.varCounter - 1);
         }
 
-        String r = ctx.children.get(2).getText();
-        Add add = new Add(l, r, compiler.varCounter++);
+        if (compiler.scope.tokenInScope(l)) {
+            l = compiler.scope.getToken(l).getValue().toString();
+            System.out.println(l);
+        }
+
+        if (compiler.scope.tokenInScope(r)) {
+            r = compiler.scope.getToken(r).getValue().toString();
+            System.out.println(r);
+        }
+
+        Add add = new Add(l, r, compiler);
         compiler.lastType = add.type;
         compiler.addLine(add);
     }

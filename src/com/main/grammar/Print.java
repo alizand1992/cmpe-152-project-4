@@ -8,18 +8,18 @@ public class Print extends Line {
     }
 
     public Print(String str) {
-        this.asm = "\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
+        this.asm = "\n\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
         this.asm += "\tldc \"" + str + "\"\n";
-        this.asm += "\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n";
+        this.asm += "\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n\n";
     }
 
     public Print(ScopeElement se) {
-        this.asm = "\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
+        this.asm = "\n\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
         this.asm += "\t" + se.getValue() + "\n";
         if (se.getType().equals("int")) {
-            this.asm += "\tinvokevirtual java/io/PrintStream/println(J)V\n";
+            this.asm += "\tinvokevirtual java/io/PrintStream/println(J)V\n\n";
         } else if (se.getType().equals("float")) {
-            this.asm += "\tinvokevirtual java/io/PrintStream/println(D)V\n";
+            this.asm += "\tinvokevirtual java/io/PrintStream/println(D)V\n\n";
         }
     }
 
