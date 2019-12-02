@@ -4,6 +4,11 @@ import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.ListTokenSource;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 public class Main {
     public static void main(String[] args) {
         try {
@@ -17,7 +22,9 @@ public class Main {
             BufferedTokenStream btsl = new BufferedTokenStream(ltsl);
             LalaParser mp = new LalaParser(btsl);
 
-            Compiler compiler = new Compiler();
+            String className = path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf('.'));
+            className = className.substring(0, 1).toUpperCase() + className.substring(1);
+            Compiler compiler = new Compiler(className);
             System.out.println("-----===== PARSE USING LISTENER =====-----");
             mp.addParseListener(new MyLalaListener(compiler));
             mp.program();
@@ -26,7 +33,15 @@ public class Main {
             System.out.println("\n\n\n\n-----===== jASMin =====-----");
             System.out.println(compiler.generateAsm());
 
+            String jfile = path.substring(0, path.lastIndexOf('.')) + ".j";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(jfile));
+            writer.write(compiler.generateAsm());
+            writer.close();
+
+
+            Process process = Runtime.getRuntime().exec(new String[] { "java", "-jar", "jasmin.jar " + jfile });
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             e.printStackTrace();
         }
     }

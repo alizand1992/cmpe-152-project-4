@@ -1,27 +1,21 @@
 package com.main.grammar;
 
-public class Print {
-    private String toPrint;
-
+public class Print extends Line {
     public Print() {
-        this.toPrint = "";
+        this("");
+    }
+
+    public Print(String str) {
+        this.asm = "\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
+        this.asm += "\tldc \"" + str + "\"\n";
+        this.asm += "\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n";
     }
 
     public Print(Integer num) {
-        this.toPrint = num.toString();
+        this(num.toString());
     }
 
     public Print(Double num) {
-        this.toPrint = num.toString();
-    }
-
-    public String generateAsm() {
-        String asm = "";
-
-        asm += "\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
-        asm += "\tldc \"" + toPrint + "\"\n";
-        asm += "\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n";
-
-        return asm;
+        this(num.toString());
     }
 }
