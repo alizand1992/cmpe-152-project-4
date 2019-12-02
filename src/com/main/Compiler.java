@@ -8,16 +8,21 @@ import java.util.Collection;
 
 public class Compiler {
     public int stackCounter;
+    public int localCounter;
+    public int varCounter;
     public String className;
     public ArrayList<Line> lines;
     public Scope scope;
+    public String lastType;
 
     public Compiler() {
         this("Main");
     }
 
     public Compiler(String className) {
+        varCounter = 1;
         stackCounter = 0;
+        localCounter = 0;
         this.className = className;
         lines = new ArrayList<Line>();
         scope = new Scope();
@@ -38,6 +43,10 @@ public class Compiler {
             ".method public static main([Ljava/lang/String;)V\n";
 
         asm += "\t.limit stack " + stackCounter + "\n";
+
+        if (localCounter != 0) {
+            asm += "\t.limit locals " + localCounter + "\n";
+        }
 
         for (Line line : lines) {
             asm += line.getAsm();

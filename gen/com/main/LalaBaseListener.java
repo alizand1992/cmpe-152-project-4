@@ -48,7 +48,7 @@ public class LalaBaseListener implements LalaListener {
 	 */
 	@Override public void exitDecls(LalaParser.DeclsContext ctx) { }
 	/**
-	 * {@inheritDoc}fe
+	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */

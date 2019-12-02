@@ -314,7 +314,6 @@ public class LalaParser extends Parser {
 	public static class TypeContext extends ParserRuleContext {
 		public TerminalNode INT() { return getToken(LalaParser.INT, 0); }
 		public TerminalNode FLOAT() { return getToken(LalaParser.FLOAT, 0); }
-		public TerminalNode BOOL() { return getToken(LalaParser.BOOL, 0); }
 		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -338,7 +337,7 @@ public class LalaParser extends Parser {
 			{
 			setState(53);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT) | (1L << FLOAT) | (1L << BOOL))) != 0)) ) {
+			if ( !(_la==INT || _la==FLOAT) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1314,8 +1313,6 @@ public class LalaParser extends Parser {
 		public TerminalNode ID() { return getToken(LalaParser.ID, 0); }
 		public TerminalNode NUM() { return getToken(LalaParser.NUM, 0); }
 		public TerminalNode REAL() { return getToken(LalaParser.REAL, 0); }
-		public TerminalNode TRUE() { return getToken(LalaParser.TRUE, 0); }
-		public TerminalNode FALSE() { return getToken(LalaParser.FALSE, 0); }
 		public FactorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1334,7 +1331,7 @@ public class LalaParser extends Parser {
 		FactorContext _localctx = new FactorContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_factor);
 		try {
-			setState(220);
+			setState(218);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
@@ -1376,20 +1373,6 @@ public class LalaParser extends Parser {
 				match(REAL);
 				}
 				break;
-			case 6:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(218);
-				match(TRUE);
-				}
-				break;
-			case 7:
-				enterOuterAlt(_localctx, 7);
-				{
-				setState(219);
-				match(FALSE);
-				}
-				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -1427,39 +1410,39 @@ public class LalaParser extends Parser {
 		PrintContext _localctx = new PrintContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_print);
 		try {
-			setState(231);
+			setState(229);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(222);
+				setState(220);
 				match(PRINT);
-				setState(223);
+				setState(221);
 				match(REAL);
-				setState(224);
+				setState(222);
 				match(SEMI);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(225);
+				setState(223);
 				match(PRINT);
-				setState(226);
+				setState(224);
 				match(NUM);
-				setState(227);
+				setState(225);
 				match(SEMI);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(228);
+				setState(226);
 				match(PRINT);
-				setState(229);
+				setState(227);
 				match(ID);
-				setState(230);
+				setState(228);
 				match(SEMI);
 				}
 				break;
@@ -1552,7 +1535,7 @@ public class LalaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#\u00ec\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#\u00ea\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\7\4/\n\4\f\4\16\4\62\13\4\3\5"+
@@ -1567,15 +1550,15 @@ public class LalaParser extends Parser {
 		"\16\3\16\3\16\3\16\7\16\u00b5\n\16\f\16\16\16\u00b8\13\16\3\17\3\17\3"+
 		"\17\3\17\3\17\3\17\5\17\u00c0\n\17\3\17\3\17\3\17\3\17\3\17\3\17\7\17"+
 		"\u00c8\n\17\f\17\16\17\u00cb\13\17\3\20\3\20\3\20\3\20\3\20\3\20\5\20"+
-		"\u00d3\n\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u00df"+
-		"\n\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u00ea\n\22\3\22"+
-		"\2\t\6\f\22\24\26\32\34\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2"+
-		"\3\3\2\3\5\2\u00fa\2$\3\2\2\2\4&\3\2\2\2\6+\3\2\2\2\b\63\3\2\2\2\n\67"+
-		"\3\2\2\2\f9\3\2\2\2\16k\3\2\2\2\20m\3\2\2\2\22r\3\2\2\2\24}\3\2\2\2\26"+
-		"\u0088\3\2\2\2\30\u00a9\3\2\2\2\32\u00ab\3\2\2\2\34\u00bf\3\2\2\2\36\u00d2"+
-		"\3\2\2\2 \u00de\3\2\2\2\"\u00e9\3\2\2\2$%\5\4\3\2%\3\3\2\2\2&\'\7!\2\2"+
-		"\'(\5\6\4\2()\5\f\7\2)*\7\"\2\2*\5\3\2\2\2+\60\b\4\1\2,-\f\3\2\2-/\5\b"+
-		"\5\2.,\3\2\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\7\3\2\2\2\62\60"+
+		"\u00d3\n\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u00dd\n\21\3"+
+		"\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u00e8\n\22\3\22\2\t\6"+
+		"\f\22\24\26\32\34\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\3\3\2"+
+		"\3\4\2\u00f6\2$\3\2\2\2\4&\3\2\2\2\6+\3\2\2\2\b\63\3\2\2\2\n\67\3\2\2"+
+		"\2\f9\3\2\2\2\16k\3\2\2\2\20m\3\2\2\2\22r\3\2\2\2\24}\3\2\2\2\26\u0088"+
+		"\3\2\2\2\30\u00a9\3\2\2\2\32\u00ab\3\2\2\2\34\u00bf\3\2\2\2\36\u00d2\3"+
+		"\2\2\2 \u00dc\3\2\2\2\"\u00e7\3\2\2\2$%\5\4\3\2%\3\3\2\2\2&\'\7!\2\2\'"+
+		"(\5\6\4\2()\5\f\7\2)*\7\"\2\2*\5\3\2\2\2+\60\b\4\1\2,-\f\3\2\2-/\5\b\5"+
+		"\2.,\3\2\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\7\3\2\2\2\62\60"+
 		"\3\2\2\2\63\64\5\n\6\2\64\65\7#\2\2\65\66\7\32\2\2\66\t\3\2\2\2\678\t"+
 		"\2\2\28\13\3\2\2\29>\b\7\1\2:;\f\3\2\2;=\5\16\b\2<:\3\2\2\2=@\3\2\2\2"+
 		"><\3\2\2\2>?\3\2\2\2?\r\3\2\2\2@>\3\2\2\2AB\7\6\2\2BC\7\36\2\2CD\5\22"+
@@ -1618,16 +1601,15 @@ public class LalaParser extends Parser {
 		"\2\u00cb\u00c9\3\2\2\2\u00cc\u00cd\7#\2\2\u00cd\u00ce\7\26\2\2\u00ce\u00d3"+
 		"\7\26\2\2\u00cf\u00d0\7#\2\2\u00d0\u00d1\7\27\2\2\u00d1\u00d3\7\27\2\2"+
 		"\u00d2\u00cc\3\2\2\2\u00d2\u00cf\3\2\2\2\u00d3\37\3\2\2\2\u00d4\u00d5"+
-		"\7\36\2\2\u00d5\u00d6\5\22\n\2\u00d6\u00d7\7\37\2\2\u00d7\u00df\3\2\2"+
-		"\2\u00d8\u00df\5\36\20\2\u00d9\u00df\7#\2\2\u00da\u00df\7\17\2\2\u00db"+
-		"\u00df\7\16\2\2\u00dc\u00df\7\20\2\2\u00dd\u00df\7\21\2\2\u00de\u00d4"+
-		"\3\2\2\2\u00de\u00d8\3\2\2\2\u00de\u00d9\3\2\2\2\u00de\u00da\3\2\2\2\u00de"+
-		"\u00db\3\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00dd\3\2\2\2\u00df!\3\2\2\2"+
-		"\u00e0\u00e1\7\r\2\2\u00e1\u00e2\7\16\2\2\u00e2\u00ea\7\32\2\2\u00e3\u00e4"+
-		"\7\r\2\2\u00e4\u00e5\7\17\2\2\u00e5\u00ea\7\32\2\2\u00e6\u00e7\7\r\2\2"+
-		"\u00e7\u00e8\7#\2\2\u00e8\u00ea\7\32\2\2\u00e9\u00e0\3\2\2\2\u00e9\u00e3"+
-		"\3\2\2\2\u00e9\u00e6\3\2\2\2\u00ea#\3\2\2\2\22\60>kz\u0085\u0093\u0095"+
-		"\u00a9\u00b4\u00b6\u00bf\u00c7\u00c9\u00d2\u00de\u00e9";
+		"\7\36\2\2\u00d5\u00d6\5\22\n\2\u00d6\u00d7\7\37\2\2\u00d7\u00dd\3\2\2"+
+		"\2\u00d8\u00dd\5\36\20\2\u00d9\u00dd\7#\2\2\u00da\u00dd\7\17\2\2\u00db"+
+		"\u00dd\7\16\2\2\u00dc\u00d4\3\2\2\2\u00dc\u00d8\3\2\2\2\u00dc\u00d9\3"+
+		"\2\2\2\u00dc\u00da\3\2\2\2\u00dc\u00db\3\2\2\2\u00dd!\3\2\2\2\u00de\u00df"+
+		"\7\r\2\2\u00df\u00e0\7\16\2\2\u00e0\u00e8\7\32\2\2\u00e1\u00e2\7\r\2\2"+
+		"\u00e2\u00e3\7\17\2\2\u00e3\u00e8\7\32\2\2\u00e4\u00e5\7\r\2\2\u00e5\u00e6"+
+		"\7#\2\2\u00e6\u00e8\7\32\2\2\u00e7\u00de\3\2\2\2\u00e7\u00e1\3\2\2\2\u00e7"+
+		"\u00e4\3\2\2\2\u00e8#\3\2\2\2\22\60>kz\u0085\u0093\u0095\u00a9\u00b4\u00b6"+
+		"\u00bf\u00c7\u00c9\u00d2\u00dc\u00e7";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

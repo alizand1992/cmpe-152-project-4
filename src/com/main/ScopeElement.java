@@ -15,6 +15,10 @@ public class ScopeElement {
         return id;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getType() {
         return type;
     }

@@ -2,17 +2,18 @@
 .super java/lang/Object
 
 .method public static main([Ljava/lang/String;)V
-    .limit stack 3
+    .limit stack 4
     .limit locals 3
 
-    sipush 1
-    sipush 2
-    iadd
-    istore 1
+    ldc2_w 10.1
+    ldc2_w 32
+    ladd
+
+    lstore 1
 
     getstatic java/lang/System/out Ljava/io/PrintStream;
-    iload 1
-    invokevirtual java/io/PrintStream/println(I)V
+    lload 1
+    invokevirtual java/io/PrintStream/println(J)V
 
     return
 .end method

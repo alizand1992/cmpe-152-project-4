@@ -1,10 +1,14 @@
 package com.main;
 
+import com.main.grammar.Add;
 import com.main.grammar.Print;
+import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import javax.swing.*;
 
 public class MyLalaListener extends LalaBaseListener {
     public Compiler compiler;
@@ -29,7 +33,7 @@ public class MyLalaListener extends LalaBaseListener {
                 compiler.addLine(new Print(num));
             } catch (Exception e2) {
                 if (compiler.scope.tokenInScope(toPrint)) {
-                    compiler.addLine(new Print(compiler.scope.getToken(toPrint).toString()));
+                    compiler.addLine(new Print(compiler.scope.getToken(toPrint)));
                 }
             }
         }
@@ -43,12 +47,51 @@ public class MyLalaListener extends LalaBaseListener {
     @Override
     public void exitAssign(LalaParser.AssignContext ctx) {
         ScopeElement se = compiler.scope.getToken(ctx.children.get(0).getText());
-        se.setValue(ctx.children.get(2).getText());
+        String rhs = ctx.children.get(2).getText();
 
+        if (compiler.lastType != null) {
+            if (compiler.lastType.equals("long")) {
+                se.setValue("lload_" + (compiler.varCounter - 1));
+                se.setType("int");
+            } else {
+                se.setValue("dload_" + (compiler.varCounter - 1));
+                se.setType("float");
+            }
+            compiler.lastType = null;
+        } else {
+            se.setValue(rhs);
+        }
     }
 
     @Override
-    public void exitBlock(LalaParser.BlockContext ctx) { }
+    public void exitExpr(LalaParser.ExprContext ctx) {
+        if (ctx.children.size() == 1)
+            return;
+
+        compiler.addStackCounter(2);
+        compiler.localCounter += 2;
+        String l = ctx.children.get(0).getText();
+
+        if (l.contains("+")) {
+            l = "lload_" + (compiler.varCounter - 1);
+        }
+
+        String r = ctx.children.get(2).getText();
+        Add add = new Add(l, r, compiler.varCounter++);
+        compiler.lastType = add.type;
+        compiler.addLine(add);
+    }
+
+
+    @Override
+    public void enterBlock(LalaParser.BlockContext ctx) {
+        compiler.scope.createScope();
+    }
+
+    @Override
+    public void exitBlock(LalaParser.BlockContext ctx) {
+        compiler.scope.exitScope();
+    }
 
     @Override
     public void enterEveryRule(ParserRuleContext ctx) { }

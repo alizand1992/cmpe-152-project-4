@@ -4,7 +4,7 @@ program : block;
 block : OFB decls stmts CFB;
 decls :  | decls decl;
 decl : type ID SEMI;
-type : INT | FLOAT | BOOL;
+type : INT | FLOAT;
 stmts : | stmts stmt;
 stmt :  IF OB allexpr CB stmt | IF OB allexpr CB stmt ELSE stmt | WHILE OB allexpr CB stmt | DO stmt WHILE OB allexpr CB SEMI | FOR OB assign allexpr SEMI incdecexpr CB stmt | BREAK SEMI | block
 | assign | print;
@@ -16,7 +16,7 @@ rel : expr LT expr | expr GTE expr | expr GT expr | expr LTE expr | expr;
 expr : expr PLUS term | expr MINUS term | term;
 term : term MUL factor | term DIV factor | factor MUL term | factor;
 incdecexpr : ID PLUS PLUS|  ID MINUS MINUS;
-factor :  OB allexpr CB | incdecexpr | ID | NUM | REAL | TRUE | FALSE;
+factor :  OB allexpr CB | incdecexpr | ID | NUM | REAL;
 print: PRINT REAL SEMI | PRINT NUM SEMI | PRINT ID SEMI;
 
 INT : 'int';
