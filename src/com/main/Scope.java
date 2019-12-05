@@ -84,7 +84,7 @@ public class Scope {
             throw new IllegalArgumentException("Cannot Insert a Token Twice");
         }
 
-        HashSet<ScopeElement> hs = scopes.removeLast();
+        HashSet<ScopeElement> hs = scopes.removeFirst();
         hs.add(new ScopeElement(id, type, value));
         scopes.add(hs);
 

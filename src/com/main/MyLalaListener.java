@@ -1,14 +1,9 @@
 package com.main;
 
-import com.main.grammar.Add;
-import com.main.grammar.Print;
-import org.antlr.v4.runtime.CommonToken;
+import com.main.grammar.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
-import javax.swing.*;
 
 public class MyLalaListener extends LalaBaseListener {
     public Compiler compiler;
@@ -46,12 +41,13 @@ public class MyLalaListener extends LalaBaseListener {
 
     @Override
     public void exitAssign(LalaParser.AssignContext ctx) {
-        ScopeElement se = compiler.scope.getToken(ctx.children.get(0).getText());
+        String lhs = ctx.children.get(0).getText();
+        ScopeElement se = compiler.scope.getToken(lhs);
         String rhs = ctx.children.get(2).getText();
 
         if (compiler.lastType != null) {
             if (compiler.lastType.equals("long")) {
-                se.setValue("lload_" + (compiler.varCounter - 1));
+                se.setValue("lload " + (compiler.varCounter - 1));
                 se.setType("int");
                 compiler.lastType = null;
             } else {
@@ -59,7 +55,7 @@ public class MyLalaListener extends LalaBaseListener {
                     compiler.lastType = "long";
                 }
 
-                se.setValue("dload_" + (compiler.varCounter - 1));
+                se.setValue("dload " + (compiler.varCounter - 1));
                 se.setType("float");
             }
         } else {
@@ -79,7 +75,11 @@ public class MyLalaListener extends LalaBaseListener {
         String r = ctx.children.get(2).getText();
 
         if (l.contains("+")) {
-            l = "lload_" + (compiler.varCounter - 1);
+            if (compiler.lastType.equals("long"))
+                l = "lload " + (compiler.varCounter - 1);
+            else
+                l = "dload " + (compiler.varCounter - 1);
+
         }
 
         if (compiler.scope.tokenInScope(l)) {
@@ -92,9 +92,16 @@ public class MyLalaListener extends LalaBaseListener {
             System.out.println(r);
         }
 
-        Add add = new Add(l, r, compiler);
-        compiler.lastType = add.type;
-        compiler.addLine(add);
+        Arith expr = null;
+        switch (ctx.children.get(1).getText()) {
+            case "+":
+                expr = new Add(l, r, compiler);
+                break;
+            case "-":
+                expr = new Sub(l, r, compiler);
+        }
+        compiler.lastType = expr.type;
+        compiler.addLine(expr);
     }
 
 

@@ -1,4 +1,4 @@
-// Generated from /home/ali/Documents/cmpe-152-project-4/Lala.g4 by ANTLR 4.7.2
+// Generated from /Users/ali/Documents/cmpe-152-project-4/Lala.g4 by ANTLR 4.7.2
 package com.main;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

@@ -14,12 +14,18 @@ public class Print extends Line {
     }
 
     public Print(ScopeElement se) {
-        this.asm = "\n\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
-        this.asm += "\t" + se.getValue() + "\n";
-        if (se.getType().equals("int")) {
-            this.asm += "\tinvokevirtual java/io/PrintStream/println(J)V\n\n";
-        } else if (se.getType().equals("float")) {
-            this.asm += "\tinvokevirtual java/io/PrintStream/println(D)V\n\n";
+        if (!se.getValue().toString().contains("load")) {
+            this.asm = new Print(se.getValue().toString()).getAsm();
+        } else {
+            this.asm = "\n\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";
+
+            this.asm += "\t" + se.getValue() + "\n";
+
+            if (se.getType().equals("int")) {
+                this.asm += "\tinvokevirtual java/io/PrintStream/println(J)V\n\n";
+            } else if (se.getType().equals("float")) {
+                this.asm += "\tinvokevirtual java/io/PrintStream/println(D)V\n\n";
+            }
         }
     }
 
