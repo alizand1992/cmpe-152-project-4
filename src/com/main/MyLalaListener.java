@@ -3,7 +3,11 @@ package com.main;
 import com.main.grammar.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyLalaListener extends LalaBaseListener {
     public Compiler compiler;
@@ -64,6 +68,73 @@ public class MyLalaListener extends LalaBaseListener {
     }
 
     @Override
+    public void exitAllexpr(LalaParser.AllexprContext ctx) {
+        String expr = ctx.children.get(0).getText();
+
+        ArrayList<String> tokens =
+            new ArrayList<String>(
+                Arrays.asList(new String[]{
+                    "=<", ">=", "<",
+                    ">", "=="
+                }));
+
+        for (String tok : tokens) {
+            if (expr.contains(tok)) {
+                String[] parts = expr.split(tok);
+
+                char ltype = '\0';
+                char rtype = '\0';
+
+                String lhs = parts[0];
+                String rhs = parts[1];
+
+                try {
+                    Integer.parseInt(rhs);
+                    rtype = 'l';
+                } catch (Exception e1) {
+                    try {
+                        Double.parseDouble(rhs);
+                        rtype = 'd';
+                    } catch (Exception e2) {
+                        ScopeElement rse = compiler.scope.getToken(rhs);
+
+                        if (rse != null) {
+                            rhs = rse.getValue().toString();
+                            rtype = rse.getType().equals("long") ? 'l' : 'd';
+                        }
+                    }
+                }
+
+                try {
+                    Integer.parseInt(lhs);
+                    ltype = 'l';
+                } catch (Exception e1) {
+                    try {
+                        Double.parseDouble(lhs);
+                        ltype = 'd';
+                    } catch (Exception e2) {
+                        ScopeElement lse = compiler.scope.getToken(lhs);
+
+                        if (lse != null) {
+                            lhs = lse.getValue().toString();
+                            ltype = lse.getType().equals("long") ? 'l' : 'd';
+                        }
+                    }
+                }
+
+                if (ltype == '\0' || rtype == '\0') {
+                    return;
+                }
+
+                char type = ltype == 'd' || rtype == 'd' ? 'd' : 'l';
+
+                Logic logic = new Logic(ltype, lhs, "ifeq", rtype, rhs, type);
+                compiler.addLine(logic);
+            }
+        }
+    }
+
+    @Override
     public void exitExpr(LalaParser.ExprContext ctx) {
         if (ctx.children.size() == 1)
             return;
@@ -84,12 +155,10 @@ public class MyLalaListener extends LalaBaseListener {
 
         if (compiler.scope.tokenInScope(l)) {
             l = compiler.scope.getToken(l).getValue().toString();
-            System.out.println(l);
         }
 
         if (compiler.scope.tokenInScope(r)) {
             r = compiler.scope.getToken(r).getValue().toString();
-            System.out.println(r);
         }
 
         Arith expr = null;
@@ -113,6 +182,32 @@ public class MyLalaListener extends LalaBaseListener {
     @Override
     public void exitBlock(LalaParser.BlockContext ctx) {
         compiler.scope.exitScope();
+    }
+
+
+    @Override
+    public void exitRel(LalaParser.RelContext ctx) {
+////        for (ParseTree pt : ctx.children)
+////            System.out.println(pt.getText());
+//
+//        if (ctx.children.size() != 3) {
+//            return;
+//        }
+//
+//        String lhs = ctx.children.get(0).getText();
+//        String rhs = ctx.children.get(2).getText();
+//
+//        System.out.println(lhs + "    " + rhs);
+//
+//        switch (ctx.children.get(1).getText()) {
+//            case "<":
+//
+//            case "<=":
+//            case ">":
+//            case ">=":
+//            case "==":
+//                break;
+//        }
     }
 
     @Override

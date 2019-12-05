@@ -55,6 +55,11 @@ public class Compiler {
             asm += line.getAsm();
         }
 
+        asm += "label_1:\n" +
+                "\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n" +
+                "\tldc \"THIS IS LABEL 1\"\n" +
+                "\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n";
+
         asm += "return\n" +
                 ".end method";
 
