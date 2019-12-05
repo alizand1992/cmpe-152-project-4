@@ -14,7 +14,9 @@ public class Print extends Line {
     }
 
     public Print(ScopeElement se) {
-        if (!se.getValue().toString().contains("load")) {
+        if (se.getValue() == null) {
+            this.asm = new Print("NULL").getAsm();
+        } else if (!se.getValue().toString().contains("load")) {
             this.asm = new Print(se.getValue().toString()).getAsm();
         } else {
             this.asm = "\n\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n";

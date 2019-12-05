@@ -29,7 +29,6 @@ public class Main {
             mp.addParseListener(new MyLalaListener(compiler));
             mp.program();
 
-
             System.out.println("\n\n\n\n-----===== jASMin =====-----");
             System.out.println(compiler.generateAsm());
 
@@ -37,9 +36,6 @@ public class Main {
             BufferedWriter writer = new BufferedWriter(new FileWriter(jfile));
             writer.write(compiler.generateAsm());
             writer.close();
-
-
-            Process process = Runtime.getRuntime().exec(new String[] { "java", "-jar", "jasmin.jar " + jfile });
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

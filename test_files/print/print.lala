@@ -4,11 +4,17 @@
     {
         int v;
 
-        v = -2;
+        v = -2.6;
         print v;
+        print test;
     }
 
     test = 2 + 1 + 3;
     test = test + 2.4 - 3.7;
     print test;
+
+    if (test == 2)
+        print 1;
+    else
+        print 0;
 }
