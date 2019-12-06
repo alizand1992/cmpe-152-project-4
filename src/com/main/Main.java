@@ -8,14 +8,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            String path = "test_files/print/print.lala";
-//            Scanner in = new Scanner(System.in);
-//            System.out.println("Please enter a path to a test file: ");
-//            path = in.nextLine();
+            String path = "";
+            Scanner in = new Scanner(System.in);
+            System.out.println("Please enter a path to a test file: ");
+            path = in.nextLine();
 
             LalaLexer mll = new LalaLexer(CharStreams.fromFileName(path));
             ListTokenSource ltsl = new ListTokenSource(mll.getAllTokens());
@@ -33,6 +34,7 @@ public class Main {
             System.out.println(compiler.generateAsm());
 
             String jfile = path.substring(0, path.lastIndexOf('.')) + ".j";
+            System.out.println("The j file is at: " + jfile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(jfile));
             writer.write(compiler.generateAsm());
             writer.close();

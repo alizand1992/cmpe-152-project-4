@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="cmpe-152-project-4:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cmpe_152_project_4_jar</output-path>
+    <root id="archive" name="cmpe-152-project-4.jar">
+      <element id="module-output" name="cmpe-152-project-4" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/antlr-4.7.1-complete.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
