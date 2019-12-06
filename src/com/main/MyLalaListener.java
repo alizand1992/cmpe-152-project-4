@@ -128,7 +128,7 @@ public class MyLalaListener extends LalaBaseListener {
 
                 char type = ltype == 'd' || rtype == 'd' ? 'd' : 'l';
 
-                Logic logic = new Logic(ltype, lhs, "ifeq", rtype, rhs, type);
+                Logic logic = new Logic(ltype, lhs, "if_icmple", rtype, rhs, type);
                 compiler.addLine(logic);
             }
         }
@@ -209,6 +209,15 @@ public class MyLalaListener extends LalaBaseListener {
 //                break;
 //        }
     }
+
+    @Override
+    public void exitStmt(LalaParser.StmtContext ctx) {
+        for (ParseTree pt : ctx.children) {
+            System.out.println(pt.getText());
+        }
+
+    }
+
 
     @Override
     public void enterEveryRule(ParserRuleContext ctx) { }
